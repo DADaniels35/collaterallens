@@ -157,4 +157,3 @@ VaR is the empirical loss quantile at the chosen confidence level. Expected Shor
 ```bash
 make test
 ```
-

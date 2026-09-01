@@ -6,3 +6,4 @@ collateral_lens.db
 data/*.db
 .DS_Store
 .streamlit/secrets.toml
+study/
