@@ -1,0 +1,9 @@
+[project]
+name = "collateral-lens"
+version = "0.1.0"
+description = "Synthetic collateral eligibility and portfolio risk platform."
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
