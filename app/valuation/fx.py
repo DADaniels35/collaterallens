@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import pandas as pd
 
-
 BASE_CURRENCY = "USD"
 FX_RATES_TO_USD = {
     "USD": 1.00,

@@ -4,7 +4,6 @@ import pandas as pd
 
 from app.risk.simulation import simulate_losses
 
-
 PRESET_SCENARIOS: dict[str, dict[str, float]] = {
     "rates_up_100bps": {
         "government_bond": -0.06,

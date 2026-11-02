@@ -9,7 +9,6 @@ from typing import Any
 
 import pandas as pd
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DB_PATH = Path(os.getenv("COLLATERAL_LENS_DB_PATH", PROJECT_ROOT / "data" / "collateral_lens.db"))
 

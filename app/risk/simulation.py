@@ -8,7 +8,6 @@ from app.risk.convergence import convergence_path, mean_confidence_interval
 from app.risk.expected_shortfall import expected_shortfall
 from app.risk.var import value_at_risk
 
-
 ASSET_VOL = {
     "cash": 0.002,
     "government_bond": 0.045,
@@ -52,7 +51,7 @@ def simulate_losses(
     seed: int,
     confidence_levels: list[float],
 ) -> tuple[np.ndarray, dict[str, object]]:
-    eligible = evaluated_assets[evaluated_assets["eligible"] == True].copy()  # noqa: E712
+    eligible = evaluated_assets[evaluated_assets["eligible"].eq(True)].copy()
     risk_concentration = {"largest_exposure_share": 0.0, "effective_exposure_count": 0.0}
     if eligible.empty:
         losses = np.zeros(simulations)

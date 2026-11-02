@@ -4,16 +4,6 @@ CollateralLens is a synthetic collateral eligibility and portfolio risk platform
 
 This project uses synthetic data and synthetic rules only. It does not include confidential institutional information, production eligibility rules, live market data, authentication, or regulatory capital calculations.
 
-## Screenshots
-
-### Streamlit Dashboard
-
-![CollateralLens dashboard](docs/screenshots/dashboard.png)
-
-### Downloadable HTML Risk Report
-
-![CollateralLens HTML risk report](docs/screenshots/report.png)
-
 ## Demo architecture vs production architecture
 
 CollateralLens is intentionally built as a portfolio/demo system, not production risk infrastructure. SQLite stores uploaded assets, evaluated portfolios, the rule set used for evaluation, simulations, and stress results as JSON payloads so the project is easy to run and inspect locally. That is useful for a demo, but a production platform would normalize those entities into relational tables, add migrations, audit history, access control, model governance, lineage, observability, and concurrency controls.

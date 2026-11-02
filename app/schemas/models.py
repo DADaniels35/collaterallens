@@ -6,7 +6,6 @@ from pydantic import BaseModel, Field, field_validator, model_validator
 
 from app.eligibility.rules import RATING_ORDER
 
-
 AssetType = Literal["government_bond", "corporate_bond", "equity", "cash", "covered_bond"]
 
 
@@ -85,7 +84,7 @@ class EligibilityRules(BaseModel):
         return values
 
     @model_validator(mode="after")
-    def maturity_range_is_valid(self) -> "EligibilityRules":
+    def maturity_range_is_valid(self) -> EligibilityRules:
         if self.min_maturity_days > self.max_maturity_days:
             raise ValueError("min_maturity_days cannot exceed max_maturity_days")
         return self

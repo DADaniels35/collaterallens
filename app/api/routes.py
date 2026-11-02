@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from typing import Annotated
 
 import pandas as pd
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
@@ -12,7 +13,14 @@ from app.eligibility.engine import evaluate_portfolio
 from app.reporting.report import render_report, summary_payload
 from app.risk.simulation import simulate_losses
 from app.risk.stress import run_stress_test
-from app.schemas.models import Asset, EligibilityRules, SimulationRequest, SimulationResult, StressRequest, StressResult
+from app.schemas.models import (
+    Asset,
+    EligibilityRules,
+    SimulationRequest,
+    SimulationResult,
+    StressRequest,
+    StressResult,
+)
 from app.valuation.fx import add_base_values
 
 router = APIRouter()
@@ -64,7 +72,10 @@ def _require_evaluation(portfolio_id: int) -> pd.DataFrame:
 
 
 @router.post("/portfolios")
-async def create_portfolio(file: UploadFile = File(...), name: str = Form("uploaded_portfolio")):
+async def create_portfolio(
+    file: Annotated[UploadFile, File()],
+    name: Annotated[str, Form()] = "uploaded_portfolio",
+):
     frame = _read_csv(file)
     portfolio_id = db.create_portfolio(name=name, assets=frame)
     return {"portfolio_id": portfolio_id, "asset_count": len(frame)}
@@ -89,7 +100,8 @@ async def evaluate(portfolio_id: int, rules_json: str | None = Form(None)):
 
 
 @router.post("/portfolios/{portfolio_id}/simulate", response_model=SimulationResult)
-async def simulate(portfolio_id: int, request: SimulationRequest = SimulationRequest()):
+async def simulate(portfolio_id: int, request: SimulationRequest | None = None):
+    request = request or SimulationRequest()
     frame = _require_evaluation(portfolio_id)
     _, metadata = simulate_losses(
         frame,
@@ -104,7 +116,8 @@ async def simulate(portfolio_id: int, request: SimulationRequest = SimulationReq
 
 
 @router.post("/portfolios/{portfolio_id}/stress", response_model=StressResult)
-async def stress(portfolio_id: int, request: StressRequest = StressRequest()):
+async def stress(portfolio_id: int, request: StressRequest | None = None):
+    request = request or StressRequest()
     frame = _require_evaluation(portfolio_id)
     try:
         payload = run_stress_test(

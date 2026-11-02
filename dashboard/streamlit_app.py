@@ -10,7 +10,6 @@ import requests
 import streamlit as st
 import streamlit.components.v1 as components
 
-
 API_URL = os.getenv("API_URL", "http://localhost:8000")
 SAMPLE_PATH = Path("data/sample_portfolio.csv")
 REQUIRED_COLUMNS = {
@@ -385,7 +384,7 @@ with stress_tab:
     )
 
 with eligibility_tab:
-    rejected = assets[assets["eligible"] == False].copy()  # noqa: E712
+    rejected = assets[assets["eligible"].eq(False)].copy()
     reason_counts = (
         rejected.explode("reason_codes")["reason_codes"].value_counts().rename_axis("reason_code").reset_index(name="count")
         if not rejected.empty

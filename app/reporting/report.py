@@ -25,7 +25,7 @@ def summary_payload(portfolio_id: int, frame: pd.DataFrame) -> dict[str, Any]:
     total_market_value = float(frame[value_column(frame)].sum())
     return {
         "portfolio_id": portfolio_id,
-        "asset_count": int(len(frame)),
+        "asset_count": len(frame),
         "eligible_count": eligible,
         "eligibility_rate": eligible / len(frame) if len(frame) else 0.0,
         "total_market_value": total_market_value,
